@@ -85,10 +85,12 @@ CHECK_INCLUDE_FILE("stdbool.h" HAVE_STDBOOL_H)
 CHECK_INCLUDE_FILE("stdint.h" HAVE_STDINT_H)
 CHECK_INCLUDE_FILE("stdlib.h" HAVE_STDLIB_H)
 CHECK_INCLUDE_FILE("string.h" HAVE_STRING_H)
+CHECK_INCLUDE_FILE("unistd.h" HAVE_UNISTD_H)
 CHECK_TYPE_SIZE("_Bool" _BOOL)
 
 ########################################################################
 
 ADD_SUBDIRECTORY(src/liblzma)
+ADD_SUBDIRECTORY(src/xz)
 
 ########################################################################

@@ -55,6 +55,15 @@ static bool warn_fchown;
 		((e) == EAGAIN || (e) == EWOULDBLOCK)
 #endif
 
+#if defined(_MSC_VER) && defined(_WIN32)
+#	if defined(_WIN64)
+typedef __int64 ssize_t;
+#	else
+typedef int ssize_t;
+#	endif
+#	define S_ISDIR(v) ((v & _S_IFDIR) == _S_IFDIR)
+#	define S_ISREG(v) ((v & _S_IFREG) == _S_IFREG)
+#endif
 
 typedef enum {
 	IO_WAIT_MORE,    // Reading or writing is possible.
@@ -887,8 +896,12 @@ io_open_dest_real(file_pair *pair)
 #ifndef TUKLIB_DOSLIKE
 		flags |= O_NONBLOCK;
 #endif
+#if defined(_MSC_VER) && defined(_WIN32)
+		pair->dest_fd = open(pair->dest_name, flags);
+#else
 		const mode_t mode = S_IRUSR | S_IWUSR;
 		pair->dest_fd = open(pair->dest_name, flags, mode);
+#endif
 
 		if (pair->dest_fd == -1) {
 			message_error("%s: %s", pair->dest_name,
