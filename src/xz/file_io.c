@@ -61,6 +61,9 @@ typedef __int64 ssize_t;
 #	else
 typedef int ssize_t;
 #	endif
+#	ifndef SSIZE_MAX
+#		define SSIZE_MAX ((ssize_t)(SIZE_MAX / 2))
+#	endif
 #	define S_ISDIR(v) ((v & _S_IFDIR) == _S_IFDIR)
 #	define S_ISREG(v) ((v & _S_IFREG) == _S_IFREG)
 #endif

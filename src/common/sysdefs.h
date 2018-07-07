@@ -42,6 +42,23 @@
 #	include <stdint.h>
 #endif
 
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
+
+typedef unsigned __int8 uint8_t;
+typedef signed __int8 int8_t;
+typedef unsigned __int16 uint16_t;
+typedef signed __int16 int16_t;
+typedef unsigned __int32 uint32_t;
+typedef signed __int32 int32_t;
+typedef unsigned __int64 uint64_t;
+typedef signed __int64 int64_t;
+
+#define snprintf tuklib_snprintf
+extern int tuklib_vsnprintf(char *outBuf, size_t size, const char *format, va_list ap);
+extern int tuklib_snprintf(char *outBuf, size_t size, const char *format, ...);
+
+#endif
+
 // Some pre-C99 systems have SIZE_MAX in limits.h instead of stdint.h. The
 // limits are also used to figure out some macros missing from pre-C99 systems.
 #ifdef HAVE_LIMITS_H
